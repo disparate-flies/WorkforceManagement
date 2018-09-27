@@ -402,19 +402,19 @@ LastLogin		DATE not null
 
 Insert into Customer
 (FirstName, LastName, AccountCreated, LastLogin)
-select 'April', 'Watson', '2018/01/11', null;
+select 'April', 'Watson', '2018/01/11', '2018/09/27';
 
 Insert into Customer
 (FirstName, LastName, AccountCreated, LastLogin)
-select 'Larry', 'King', '2018/01/11', null;
+select 'Larry', 'King', '2018/01/11', '2018/09/27';
 
 Insert into Customer
 (FirstName, LastName, AccountCreated, LastLogin)
-select 'Kenya', 'Stevens', '2018/01/11', null;
+select 'Kenya', 'Stevens', '2018/01/11', '2018/09/27';
 
 Insert into Customer
 (FirstName, LastName, AccountCreated, LastLogin)
-select 'Kenneth', 'Burnett', '2018/01/11', null;
+select 'Kenneth', 'Burnett', '2018/01/11', '2018/09/27';
 					
 Create table ProductType (
 Id	integer not null primary key IDENTITY,
@@ -451,33 +451,18 @@ Constraint FK_Seller Foreign Key(SellerId) References Customer(Id)
 					
 Insert into Product
 (ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity) 
-select pt.Id, 2, 5, 'Teddy Bear', 'fluffy & cuddly', 582
-from ProductType pt where pt.Name = 'Toys';
+select pt.Id, c.Id, 5, 'Teddy Bear', 'fluffy & cuddly', 582
+from ProductType pt, Customer c where pt.Name = 'Toys' and c.Id = 1;
 
 Insert into Product
 (ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity) 
-select pt.Id, 2, 3, 'Dove Beauty Bar', 'gentle cleanser for skin', 1980
-from ProductType pt where pt.Name = 'Health & Beauty';
+select pt.Id, c.Id, 3, 'Dove Beauty Bar', 'gentle cleanser for skin', 1980
+from ProductType pt,Customer c  where pt.Name = 'Health & Beauty' AND c.Id = 2;
 
 Insert into Product 
 (ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity)
-select pt.Id, 2, 8, 'Pantene Gold Series Shampoo', 'hair nourishment', 750
-from ProductType pt where pt.Name = 'Health & Beauty';
-
-Insert into Product 
-(ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity) 
-select pt.Id, 2, 2, 'Chiquita Bananas', 'imported from Mexico', 750
-from ProductType pt where pt.Name = 'Food';
-
-Insert into Product 
-(ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity)
-select pt.Id, 2, 15, 'Jumbo Frozen Shrimp', 'Pacific Wild Caught, 2lb bag', 827
-from ProductType pt where pt.Name = 'Food';
-
-Insert into Product 
-(ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity) 
-select pt.Id, 2, 4, 'Lysol Wipes', 'bathroom and kitchen cleaner', 1769
-from ProductType pt where pt.Name = 'Home & Garden';
+select pt.Id, c.Id, 8, 'Pantene Gold Series Shampoo', 'hair nourishment', 750
+from ProductType pt, Customer c where pt.Name = 'Health & Beauty' AND c.Id = 2;
 					
 Create table PaymentType (
 Id		integer not null primary key IDENTITY,
@@ -557,36 +542,13 @@ Constraint FK_Orders foreign key(OrderId) references Orders(Id)
 
 Insert into ProductOrder 
 (ProductId, OrderId)
-select p.Id, 1
-from Product p
-where p.Title = 'Lysol Wipes';
+select p.Id, o.Id
+from Product p, Orders o
+where p.Title = 'Dove Beauty Bar' AND o.Id = 1;
 
 Insert into ProductOrder 
 (ProductId, OrderId)
-select p.Id, 2
-from Product p
-where p.Title = 'Jumbo Frozen Shrimp';
+select p.Id, o.id
+from Product p, Orders o
+where p.Title = 'Pantene Gold Series Shampoo' AND o.Id = 2;
 
-Insert into ProductOrder 
-(ProductId, OrderId)
-select p.Id, 2
-from Product p
-where p.Title = 'Chiquita Bananas';
-
-Insert into ProductOrder 
-(ProductId, OrderId)
-select p.Id, 3
-from Product p
-where p.Title = 'Teddy Bear';
-
-Insert into ProductOrder 
-(ProductId, OrderId)
-select p.Id, 4
-from Product p
-where p.Title = 'Dove Beauty Bar';
-
-Insert into ProductOrder 
-(ProductId, OrderId)
-select p.Id, 4
-from Product p
-where p.Title = 'Pantene Gold Series Shampoo';
