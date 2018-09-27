@@ -8,6 +8,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+.vs/
+WorkforceManagement/appsettings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
