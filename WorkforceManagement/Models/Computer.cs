@@ -9,7 +9,7 @@ namespace WorkforceManagement.Models
     {
         public int Id { get; set; }
 
-        public DateTime PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; } 
 
         public string Model { get; set; }
 
