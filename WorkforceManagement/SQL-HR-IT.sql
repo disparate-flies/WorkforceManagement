@@ -186,27 +186,28 @@ Id	integer NOT NULL PRIMARY KEY IDENTITY,
 ProgName	varchar(80) NOT NULL,
 StartDate	DATE NOT NULL,
 EndDate	DATE not null,
+ProgDesc varchar(80) NOT NULL,
 MaxAttendees integer not null
 );
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'New Hire', '2018/09/19', '2019/12/18', 20
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'New Hire', '2018/09/19', '2019/12/18', 'Onboarding', 20
 ;
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'Sales', '2018/10/11', '2019/01/18', 8
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'Sales', '2018/10/11', '2019/01/18', 'Learning how to sell', 8
 ;
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'Six Sigma', '2018/11/11', '2019/02/10', 15
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'Six Sigma', '2018/11/11', '2019/02/10', 'Learn what Six Sigma is', 15
 ;
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'Diversity', '2018/12/11', '2019/04/12', 50
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'Diversity', '2018/12/11', '2019/04/12', 'Learning to love everyone', 50
 ;
 					
 CREATE TABLE EmployeeTraining (
