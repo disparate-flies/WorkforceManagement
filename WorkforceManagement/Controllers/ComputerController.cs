@@ -30,6 +30,7 @@ namespace WorkforceManagement.Controllers
 
         // GET: Computer
         public async Task<IActionResult> Index()
+        {
         using (IDbConnection conn = Connection) {
                 IEnumerable<Computer> exercises = await conn.QueryAsync<Computer>(
                     "select Id, PurchaseDate, Model, DecommissionDate, Condition from computer;"
