@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WorkforceManagement.Models;
+using Dapper;
 
 namespace WorkforceManagement.Controllers
 {
@@ -32,8 +34,8 @@ namespace WorkforceManagement.Controllers
         public async Task<IActionResult> Index()
         {
         using (IDbConnection conn = Connection) {
-                IEnumerable<Computer> exercises = await conn.QueryAsync<Computer>(
-                    "select Id, PurchaseDate, Model, DecommissionDate, Condition from computer;"
+                IEnumerable<Computer> computer = await conn.QueryAsync<Computer>(
+                    "select Id, PurchaseDate, Manufacturer, Make, DecommissionDate, Condition from Computer;"
                 );
                 return View(computer);
 }
