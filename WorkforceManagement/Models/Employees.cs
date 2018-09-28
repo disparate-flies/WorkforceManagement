@@ -34,6 +34,6 @@ namespace WorkforceManagement.Models
         [Display(Name = "Currently Assigned Computer")]
         public int ComputerId { get; set; }
 
-        public List<TrainingProgram> TrainingPrograms { get; set; } = new List<TrainingProgram>();
+        public List<Training> TrainingPrograms { get; set; } = new List<Training>();
     }
 }
