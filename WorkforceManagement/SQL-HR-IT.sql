@@ -458,7 +458,7 @@ from ProductType pt, Customer c where pt.Name = 'Toys' and c.Id = 1;
 
 Insert into Product
 (ProductTypeId, SellerId, Price, Title, ProdDesc, Quantity) 
-select pt.Id, c.Id, 3, 'Dove Beauty Bar', 'gentle cleanser for skin', 1980
+select pt.Id, c.Id, 3, 'Dove Beauty Bar', 'gentle cleanser for skin', 1980      
 from ProductType pt,Customer c  where pt.Name = 'Health & Beauty' AND c.Id = 2;
 
 Insert into Product 
