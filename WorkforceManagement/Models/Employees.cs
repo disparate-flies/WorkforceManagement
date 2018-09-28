@@ -25,6 +25,8 @@ namespace WorkforceManagement.Models
         [Required]
         [Display(Name = "Department Id")]
         public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+
 
         [Required]
         [Display(Name = "Is Active")]
@@ -33,6 +35,8 @@ namespace WorkforceManagement.Models
         [Required]
         [Display(Name = "Currently Assigned Computer")]
         public int ComputerId { get; set; }
+        public Computer Computer { get; set; }
+
 
         public List<Training> TrainingPrograms { get; set; } = new List<Training>();
     }
