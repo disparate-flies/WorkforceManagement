@@ -38,6 +38,6 @@ namespace WorkforceManagement.Models
         public Computer Computer { get; set; }
 
 
-        public List<TrainingProgram> TrainingPrograms { get; set; } = new List<TrainingProgram>();
+        public List<Training> TrainingPrograms { get; set; } = new List<Training>();
     }
 }
