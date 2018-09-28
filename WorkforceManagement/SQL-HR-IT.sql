@@ -277,66 +277,67 @@ where e.FirstName = 'Jack' and tp.ProgName = 'Six Sigma'
 CREATE TABLE Computer (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
 PurchaseDate	DATE NOT NULL,
-Model	varchar(80) not null,
+Manufacturer	varchar(80) not null,
+Make varchar(80) not null,
 DecommissionDate	DATE,
 Condition	varchar(80) not null
 );
 					
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2018/07/01', 'Apple', null, 'new';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2018/07/01', 'Apple', 'MacBook Pro', null, 'new';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2018/08/02', 'Apple', null, 'new';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2018/08/02', 'Apple', 'MacBook Pro', null, 'new';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2018/09/03', 'Apple', null, 'new';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2018/09/03', 'Apple', 'MacBook Pro', null, 'new';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'Apple', null, 'good';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'Apple', 'MacBook Pro', null, 'good';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'Apple', null, 'good';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'Apple', 'MacBook Pro', null, 'good';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'Apple', null, 'good';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'Apple', 'MacBook Pro', null, 'good';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'HP', null, 'good';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'HP', 'Spectre Laptop', null, 'good';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'HP', null, 'good';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'HP', 'Spectre Laptop', null, 'good';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'HP', null, 'good';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'HP', 'Spectre Laptop', null, 'good';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', null, 'fair';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', null, 'fair';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', null, 'fair';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', null, 'fair';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', null, 'fair';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', null, 'fair';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', '2018/04/30', 'decommissioned';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', '2018/04/30', 'decommissioned';
 
 Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'HP', '2018/04/23', 'decommissioned';
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'HP', 'Spectre Laptop', '2018/04/23', 'decommissioned';
 					
 CREATE TABLE EmployeeComputer (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
