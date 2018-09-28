@@ -10,6 +10,7 @@
 *.sln.docstates
 .vs/
 WorkforceManagement/appsettings.json
+WorkforceManagement/appsetting.Development.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
