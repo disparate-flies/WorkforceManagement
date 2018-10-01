@@ -32,7 +32,6 @@ namespace WorkforceManagement.Models
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        public List<Employees> AttendingEmployees { get; set; } = new List<Employees>();
     }
 
 }
