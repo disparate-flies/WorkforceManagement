@@ -18,7 +18,7 @@ namespace WorkforceManagement.Controllers
     {
         private readonly IConfiguration _config;
 
-        public TrainingController (IConfiguration config)
+        public TrainingController(IConfiguration config)
         {
             _config = config;
         }
@@ -40,18 +40,18 @@ namespace WorkforceManagement.Controllers
                 t.ProgName
                 from Training t";
 
-        using (IDbConnection conn = Connection)
+            using (IDbConnection conn = Connection)
             {
                 Dictionary<int, Training> trainingPrograms = new Dictionary<int, Training>();
 
                 var trainingQuerySet = await conn.QueryAsync<Training>(
                     sql);
                 return View(trainingQuerySet);
-            }            
+            }
         }
 
         //GET Training Program Details
-        public async Task<IActionResult> Details (int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -81,11 +81,11 @@ namespace WorkforceManagement.Controllers
             }
         }
 
-        public async Task<IActionResult> Create ()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
-    }
+
 
     //POST Create Training Program
     [HttpPost]
@@ -119,5 +119,6 @@ VALUES
         }
         return View(trainingProgram);
     }
+}
 
 }
