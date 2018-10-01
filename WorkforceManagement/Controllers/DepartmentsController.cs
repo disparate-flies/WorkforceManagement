@@ -59,7 +59,7 @@ namespace WorkforceManagement.Controllers
 		    FROM Department d
 		    LEFT JOIN Employee e
 		    ON d.Id = e.DepartmentId
-            WHERE d.Id = 1;";
+            WHERE d.Id = {id};";
 
             using (IDbConnection conn = Connection)
             {
