@@ -34,7 +34,7 @@ namespace WorkforceManagement.Controllers
             using (IDbConnection conn = Connection)
             {
                 IEnumerable<Department> departments = await conn.QueryAsync<Department>(
-                    "select DeptName from Department;"
+                    "select Id, DeptName from Department;"
                 );
                 return View(departments);
             }
@@ -49,25 +49,37 @@ namespace WorkforceManagement.Controllers
             }
 
             string sql = $@"
-            SELECT  d.DeptName,
+            SELECT 
+            d.Id,
+            d.DeptName,
+            e.Id,
+            e.DepartmentId,
 		    e.FirstName,
 		    e.LastName
 		    FROM Department d
-		    JOIN Employee e
+		    LEFT JOIN Employee e
 		    ON d.Id = e.DepartmentId
-            WHERE d.Id = {id}";
+            WHERE d.Id = 1;";
 
             using (IDbConnection conn = Connection)
             {
 
-                Department department = (await conn.QueryAsync<Department>(sql)).ToList().Single();
-
-                if (department == null)
+                Department dept = new Department();
+                var deptQuery = await conn.QueryAsync<Department, Employees, Department>(sql,
+                    (department, employee) =>
                 {
-                    return NotFound();
+
+                    dept.Id = department.Id;
+                    dept.DeptName = department.DeptName;
+
+
+                    dept.EmployeeList.Add(employee);
+                    return department;
                 }
 
-                return View(department);
+                );
+
+                return View(dept);
             }
         }
 
