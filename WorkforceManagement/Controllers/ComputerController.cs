@@ -81,18 +81,28 @@ namespace WorkforceManagement.Controllers
         // POST: Computer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(Computer computer)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            if (ModelState.IsValid) {
+                string sql = $@"
+                    INSERT INTO Computer
+                        (PurchaseDate, Manufacturer, Make )
+                        VALUES
+                        ('{computer.PurchaseDate}',
+                         '{computer.Manufacturer}', 
+                         '{computer.Make}')";
 
-                return RedirectToAction(nameof(Index));
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
             }
-            catch
-            {
-                return View();
-            }
+                return View(computer);
         }
 
         // GET: Computer/Edit/5
