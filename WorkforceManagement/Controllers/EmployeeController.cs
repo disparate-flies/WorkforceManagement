@@ -69,9 +69,9 @@ namespace WorkforceManagement.Controllers
             }
         }
 
-        public async Task<IActionResult> EmployeeDetails (int? id)
+        public async Task<IActionResult> EmployeeDetails(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -89,7 +89,7 @@ namespace WorkforceManagement.Controllers
             using (IDbConnection conn = Connection)
             {
                 Employees employees = (await conn.QueryAsync<Employees>(sql)).ToList().Single();
-                
+
                 if (employees == null)
                 {
                     return NotFound();
@@ -99,6 +99,26 @@ namespace WorkforceManagement.Controllers
             }
         }
 
+        public async Task<SelectList> EmployeeList(int? selected)
+        {
+            using (IDbConnection conn = Connection)
+            {
+                List<Employees> employees = (await conn.QueryAsync<Employees>("SELECT Id, FirstName FROM Employee")).ToList();
 
+                employees.Insert(0, new Employees() { Id=0, FirstName="Insert New Employee..."});
+
+                var selectList = new SelectList(employees, "Id", "FirstName", selected);
+                return selectList;
+            }
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            using (IDbConnection conn = Connection)
+            {
+                ViewData["EmployeeId"] = await EmployeeList(null);
+                return View();
+            }
+        }
     }
 }
