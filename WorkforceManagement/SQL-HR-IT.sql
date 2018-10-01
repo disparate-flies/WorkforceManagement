@@ -1,5 +1,4 @@
 --ALTER TABLE Employee DROP CONSTRAINT [FK_Department];
---ALTER TABLE Employee DROP CONSTRAINT [FK_Computer];
 --ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_Employee];
 --ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_TrainingProgram];
 --ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_Employee_Computer];
@@ -70,7 +69,7 @@ PurchaseDate	DATE NOT NULL,
 Manufacturer	varchar(80) not null,
 Make varchar(80) not null,
 DecommissionDate	DATE,
-Condition	varchar(80) null
+Condition	varchar(80)
 );
 					
 Insert into Computer
@@ -137,178 +136,164 @@ StartDate DATE NOT NULL,
 EndDate DATE,
 IsSupervisor	bit,
 DepartmentId integer NOT NULL,
-ComputerId integer,
 IsActive	bit
-Constraint FK_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
-Constraint FK_Computer_Employee FOREIGN KEY(ComputerId) REFERENCES Computer(Id)
+Constraint FK_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id)
 );
 					
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'John',
 'Doe',
 '2010/01/20',
 null,
 1,
 d.Id,
-c.Id,
 1
-from Department d, Computer c 
-where d.DeptName = 'Marketing' and c.Id = 1
+from Department d
+where d.DeptName = 'Marketing'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Jane',
 'Smith',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id,
 1
-from Department d, Computer c
-where d.DeptName = 'Human Resources' and c.Id = 2
+from Department d
+where d.DeptName = 'Human Resources'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select'Brittany',
 'Jefferson',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id,
 1
-from Department d, Computer c
-where d.DeptName = 'Information Technology' and c.Id = 3
+from Department d
+where d.DeptName = 'Information Technology'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Frank',
 'Willson',
 '2010/01/20',
 null,
 1,
 d.Id,
-c.Id,
 1
-from Department d, Computer c
-where d.DeptName = 'Accounting' and c.Id = 4
+from Department d
+where d.DeptName = 'Accounting'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Jack',
 'Johnson',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id,
 0
-from Department d, Computer c
-where d.DeptName = 'Marketing' and c.Id = 5
+from Department d
+where d.DeptName = 'Marketing'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'John',
 'Bob',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id,
 1
-from Department d, Computer c
-where d.DeptName = 'Accounting' and c.Id = 6
+from Department d
+where d.DeptName = 'Accounting'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Iron',
 'Man',
 '2010/01/20',
 null,
 1,
 d.Id,
-c.Id,
 1
-from Department d, Computer c
-where d.DeptName = 'Human Resources' and c.Id = 7
+from Department d
+where d.DeptName = 'Human Resources'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Joe',
 'Black',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id,
 0
-from Department d, Computer c
-where d.DeptName = 'Marketing' and c.Id = 8
+from Department d
+where d.DeptName = 'Marketing'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Ben',
 'Button',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id, 
 1
-from Department d, Computer c
-where d.DeptName = 'Accounting' and c.Id = 9
+from Department d
+where d.DeptName = 'Accounting'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Lady',
 'Gaga',
 '2010/01/20',
 null,
 1,
 d.Id,
-c.Id, 
 1
-from Department d, Computer c
-where d.DeptName = 'Marketing' and c.Id = 10
+from Department d
+where d.DeptName = 'Marketing'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Mister',
 'Smith',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id, 
 1
-from Department d, Computer c
-where d.DeptName = 'Accounting' and c.Id = 11
+from Department d
+where d.DeptName = 'Accounting'
 ;
 
 Insert into Employee
-(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, ComputerId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Ryan',
 'Reynolds',
 '2010/01/20',
 null,
 0,
 d.Id,
-c.Id, 
 1
-from Department d, Computer c
-where d.DeptName = 'Marketing' and c.Id = 12
+from Department d
+where d.DeptName = 'Marketing'
 ;
 					
 CREATE TABLE TrainingProgram (
