@@ -78,13 +78,11 @@ namespace WorkforceManagement.Controllers
                e.Id,
                e.FirstName,
                e.LastName,
-               e.IsSupervisor,
-               e.IsActive,
-               d.DepartmentId,
-               c.ComputerId
+               c.ComputerId,
+               t.Training
             from Employees e
-            join Department d on e.DepartmentId = d.Id
             join Computer c on e.ComputerId = c.Id
+            join Training t on e.Training = t.Id
           ";
 
             using (IDbConnection conn = Connection)
@@ -121,5 +119,40 @@ namespace WorkforceManagement.Controllers
                 return View();
             }
         }
+
+        // POST: Employee/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create (Employees employees)
+        {
+            if (ModelState.IsValid)
+            {
+                string sql = $@"
+                    insert into Employees
+                        (FirstName, LastName, StartDate, Department)
+                    values
+                        ('{employees.FirstName}',
+                         '{employees.LastName}',
+                         '{employees.StartDate}',   
+                         '{employees.Department}')";
+
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+            }
+
+            using (IDbConnection conn = Connection)
+            {
+                IEnumerable<Employees> employee = (await conn.QueryAsync<Employees>("SELECT Id, FirstName FROM Employees")).ToList();
+                ViewData["EmployeeId"] = await EmployeeList(employee.Employees);
+                return View(employee);
+            }
+        } 
     }
 }
