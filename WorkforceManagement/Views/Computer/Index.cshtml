@@ -35,8 +35,8 @@
                 @Html.DisplayFor(modelItem => computer.Manufacturer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => computer.Make)
-            </td>
+                <a asp-action="Details" asp-route-id="@computer.Id"> @Html.DisplayFor(modelItem => computer.Make)</a>
+</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@computer.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@computer.Id">Details</a> |

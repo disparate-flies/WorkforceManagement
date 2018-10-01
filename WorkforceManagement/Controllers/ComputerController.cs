@@ -42,9 +42,34 @@ namespace WorkforceManagement.Controllers
         }
 
         // GET: Computer/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details([FromRoute]int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            string sql = $@"
+            SELECT
+                c.Id,
+                c.PurchaseDate,
+                c.Manufacturer,
+                c.Make,
+                c.DecommissionDate,
+                c.Condition
+            FROM Computer c
+            WHERE c.Id = {id}";
+
+            using (IDbConnection conn = Connection)
+            {
+                Computer computer = await conn.QuerySingleAsync<Computer>(sql);
+
+                if (computer == null) {
+                    return NotFound();
+                }
+
+                return View(computer);
+            }
         }
 
         // GET: Computer/Create
