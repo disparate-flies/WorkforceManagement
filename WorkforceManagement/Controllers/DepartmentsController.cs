@@ -41,9 +41,34 @@ namespace WorkforceManagement.Controllers
         }
 
         // GET: Departments/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            string sql = $@"
+            SELECT  d.DeptName,
+		    e.FirstName,
+		    e.LastName
+		    FROM Department d
+		    JOIN Employee e
+		    ON d.Id = e.DepartmentId
+            WHERE d.Id = {id}";
+
+            using (IDbConnection conn = Connection)
+            {
+
+                Department department = (await conn.QueryAsync<Department>(sql)).ToList().Single();
+
+                if (department == null)
+                {
+                    return NotFound();
+                }
+
+                return View(department);
+            }
         }
 
         // GET: Departments/Create

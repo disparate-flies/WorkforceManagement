@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WorkforceManagement.Models.Department>
+
+@{
+    ViewData["Title"] = "Department Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DeptName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var department in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => department.EmployeeList)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => department.Cohort.Name)
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
