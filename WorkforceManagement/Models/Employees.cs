@@ -27,6 +27,16 @@ namespace WorkforceManagement.Models
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Start Date")]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
+        public DateTime EndDate { get; set; }
+
 
         [Required]
         [Display(Name = "Is Active")]
