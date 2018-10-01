@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WorkforceManagement.Models;
+using Dapper;
 
 namespace WorkforceManagement.Controllers
 {
@@ -29,31 +31,12 @@ namespace WorkforceManagement.Controllers
         // GET: Departments
         public async Task<IActionResult> Index()
         {
-
-            string sql = @"
-            select
-                d.Id,
-                d.DeptName,
-                from Department d
-        ";
-
             using (IDbConnection conn = Connection)
             {
-                Dictionary<int, Student> students = new Dictionary<int, Student>();
-
-                var studentQuerySet = await conn.QueryAsync<Student, Cohort, Student>(
-                        sql,
-                        (student, cohort) => {
-                            if (!students.ContainsKey(student.Id))
-                            {
-                                students[student.Id] = student;
-                            }
-                            students[student.Id].Cohort = cohort;
-                            return student;
-                        }
-                    );
-                return View(students.Values);
-
+                IEnumerable<Department> departments = await conn.QueryAsync<Department>(
+                    "select DeptName from Department;"
+                );
+                return View(departments);
             }
         }
 
