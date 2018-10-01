@@ -37,18 +37,15 @@ namespace WorkforceManagement.Controllers
         public async Task<IActionResult> Index()
         {
             string sql = @"
-            select
-               e.Id,
-               e.FirstName,
-               e.LastName,
-               e.IsSupervisor,
-               e.IsActive,
-               d.DepartmentId,
-               c.ComputerId
-            from Employees e
-            join Department d on e.DepartmentId = d.Id
-            join Computer c on e.ComputerId = c.Id
-        ";
+               select 
+                    e.Id,
+                    e.FirstName,
+                    e.LastName,
+                    d.DepartmentId
+                from Employee e
+                join Department d on e.DepartmentId = d.Id
+                where e.Id = {id}";
+
             using (IDbConnection conn = Connection)
             {
                 Dictionary<int, Employees> Employee = new Dictionary<int, Employees>();
@@ -77,14 +74,18 @@ namespace WorkforceManagement.Controllers
             }
 
             string sql = $@"
-                select 
-                    e.Id,
-                    e.FirstName,
-                    e.LastName,
-                    d.DepartmentId
-                from Employee e
-                join Department d on e.DepartmentId = d.Id
-                where e.Id = {id}";
+            select
+               e.Id,
+               e.FirstName,
+               e.LastName,
+               e.IsSupervisor,
+               e.IsActive,
+               d.DepartmentId,
+               c.ComputerId
+            from Employees e
+            join Department d on e.DepartmentId = d.Id
+            join Computer c on e.ComputerId = c.Id
+          ";
 
             using (IDbConnection conn = Connection)
             {
