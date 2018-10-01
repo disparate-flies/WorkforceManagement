@@ -19,24 +19,6 @@ namespace WorkforceManagement.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IConfiguration _config;
 
-        public EmployeeController (IConfiguration config)
-        {
-            _config = config;
-        }
-
-        public IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            }
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }
