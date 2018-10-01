@@ -96,16 +96,16 @@ namespace WorkforceManagement.Controllers
         if (ModelState.IsValid)
         {
             string sql = $@"
-INSERT INTO Training
-(ProgName, StartDate, EndDate, MaxAttendees, Description)
-VALUES
-( '{trainingProgram.ProgName}'
-    ,{trainingProgram.StartDate}
-    ,{trainingProgram.EndDate}
-    ,{trainingProgram.MaxAttendees}
-    ,{trainingProgram.Description}
-)
-";
+                INSERT INTO Training
+                (ProgName, StartDate, EndDate, MaxAttendees, Description)
+                VALUES
+                ( '{trainingProgram.ProgName}'
+                    ,{trainingProgram.StartDate}
+                    ,{trainingProgram.EndDate}
+                    ,{trainingProgram.MaxAttendees}
+                    ,{trainingProgram.Description}
+                )
+                ";
 
             using (IDbConnection conn = Connection)
             {
@@ -120,5 +120,8 @@ VALUES
         return View(trainingProgram);
     }
 }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, )
 
 }
