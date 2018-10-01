@@ -8,10 +8,8 @@ using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
-using Workforce.Models;
-using Workforce.Models.ViewModels;
+using WorkforceManagement.Models;
 using System.Data.SqlClient;
 
 
@@ -44,8 +42,8 @@ namespace WorkforceManagement.Controllers
                e.FirstName,
                e.LastName,
                e.IsSupervisor,
-               d.DepartmentId,
                e.IsActive,
+               d.DepartmentId,
                c.ComputerId
             from Employees e
             join Department d on e.DepartmentId = d.Id
@@ -53,25 +51,54 @@ namespace WorkforceManagement.Controllers
         ";
             using (IDbConnection conn = Connection)
             {
-                Dictionary<int, Employee> Employee = new Dictionary<int, Employee>();
+                Dictionary<int, Employees> Employee = new Dictionary<int, Employees>();
 
-                var employeeQuerySet = await conn.QueryAsync<Employee, Department, Computer>(
+                var employeeQuerySet = await conn.QueryAsync<Employees, Department, Computer, Employees>(
                     sql,
-                    (emloyee, department) =>
+                    (employees, department, computer) =>
                     {
-                        if (!employees.ContainsKey(employee.Id))
+                        if (!Employee.ContainsKey(employees.Id))
                         {
-                            employees[employee.Id] = employee;
+                            Employee[employees.Id] = employees;
                         }
-                        employees[employee.Id].Department = department;
-                        return employee;
+                        Employee[employees.Id].Department = department;
+                        Employee[employees.Id].Computer = computer;
+                        return employees;
                     });
-                return View(employees.Values);
+                return View(Employee.Values);
             }
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> EmployeeDetails (int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            string sql = $@"
+                select 
+                    e.Id,
+                    e.FirstName,
+                    e.LastName,
+                    d.DepartmentId
+                from Employee e
+                join Department d on e.DepartmentId = d.Id
+                where e.Id = {id}";
+
+            using (IDbConnection conn = Connection)
+            {
+                Employees employees = (await conn.QueryAsync<Employees>(sql)).ToList().Single();
+                
+                if (employees == null)
+                {
+                    return NotFound();
+                }
+
+                return View(employees);
+            }
         }
+
+
     }
 }
