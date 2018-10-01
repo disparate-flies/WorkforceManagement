@@ -1,41 +1,41 @@
---ALTER TABLE Employee DROP CONSTRAINT [FK_Department];
---ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_Employee];
---ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_TrainingProgram];
---ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_Employee_Computer];
---ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_Computer];
---ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Product];
---ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Orders];
---ALTER TABLE Orders DROP CONSTRAINT [FK_Customer_Order];
---ALTER TABLE Orders DROP CONSTRAINT [FK_PaymentType];
---ALTER TABLE Product DROP CONSTRAINT [FK_ProductType];
---ALTER TABLE Product DROP CONSTRAINT [FK_Seller];
---ALTER TABLE PaymentType DROP CONSTRAINT [FK_Customer];
+ALTER TABLE Employee DROP CONSTRAINT [FK_Department];
+ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_Employee];
+ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_TrainingProgram];
+ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_EmployeeComputer_Employee];
+ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_EmployeeComputer_Computer];
+ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Product];
+ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Orders];
+ALTER TABLE Orders DROP CONSTRAINT [FK_Customer_Order];
+ALTER TABLE Orders DROP CONSTRAINT [FK_PaymentType];
+ALTER TABLE Product DROP CONSTRAINT [FK_ProductType];
+ALTER TABLE Product DROP CONSTRAINT [FK_Seller];
+ALTER TABLE PaymentType DROP CONSTRAINT [FK_Customer];
 
---delete from ProductOrder;
---delete from Orders;
---delete from PaymentType;
---delete from Customer;
---delete from Product;
---delete from ProductType;
---delete from EmployeeComputer;
---delete from Computer;
---delete from EmployeeTraining;
---delete from TrainingProgram;
---delete from Employee;
---delete from Department;
+delete from ProductOrder;
+delete from Orders;
+delete from PaymentType;
+delete from Customer;
+delete from Product;
+delete from ProductType;
+delete from EmployeeComputer;
+delete from Computer;
+delete from EmployeeTraining;
+delete from TrainingProgram;
+delete from Employee;
+delete from Department;
 
---drop table if exists Department;
---drop table if exists TrainingProgram;
---drop table if exists EmployeeTraining;
---drop table if exists Computer;
---drop table if exists EmployeeComputer;
---drop table if exists ProductType;
---drop table if exists Product;
---drop table if exists Customer;
---drop table if exists PaymentType;
---drop table if exists Orders;
---drop table if exists ProductOrder;
---drop table if exists Employee;
+drop table if exists Department;
+drop table if exists TrainingProgram;
+drop table if exists EmployeeTraining;
+drop table if exists Computer;
+drop table if exists EmployeeComputer;
+drop table if exists ProductType;
+drop table if exists Product;
+drop table if exists Customer;
+drop table if exists PaymentType;
+drop table if exists Orders;
+drop table if exists ProductOrder;
+drop table if exists Employee;
 	
 CREATE TABLE Department (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
@@ -397,8 +397,8 @@ EmployeeId	integer NOT NULL,
 ComputerId	integer NOT NULL,
 DateAssigned		DATE not null,
 DateTurnedIn		DATE,
-Constraint FK_Employee_Computer FOREIGN KEY(EmployeeId) REFERENCES Employee(Id),
-Constraint FK_Computer FOREIGN KEY(ComputerId) REFERENCES Computer(Id)
+Constraint FK_EmployeeComputer_Employee FOREIGN KEY(EmployeeId) REFERENCES Employee(Id),
+Constraint FK_EmployeeComputer_Computer FOREIGN KEY(ComputerId) REFERENCES Computer(Id)
 );
 					
 Insert into EmployeeComputer
