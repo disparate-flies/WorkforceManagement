@@ -34,7 +34,7 @@ namespace WorkforceManagement.Controllers
             using (IDbConnection conn = Connection)
             {
                 IEnumerable<Department> departments = await conn.QueryAsync<Department>(
-                    "select DeptName from Department;"
+                    "select Id, DeptName from Department;"
                 );
                 return View(departments);
             }
