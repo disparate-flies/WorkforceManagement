@@ -4,14 +4,16 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using WorkforceManagement.Models;
 using System.Data.SqlClient;
 
+=======
+>>>>>>> master
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,6 +21,7 @@ namespace WorkforceManagement.Controllers
 {
     public class EmployeeController : Controller
     {
+<<<<<<< HEAD
         private readonly IConfiguration _config;
 
         public EmployeeController(IConfiguration config)
@@ -154,5 +157,8 @@ namespace WorkforceManagement.Controllers
                 return View(employee);
             }
         } 
+=======
+
+>>>>>>> master
     }
 }
