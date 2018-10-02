@@ -1,41 +1,41 @@
---ALTER TABLE Employee DROP CONSTRAINT [FK_Department];
---ALTER TABLE Product DROP CONSTRAINT [FK_ProductType];
---ALTER TABLE Product DROP CONSTRAINT [FK_Seller];
---ALTER TABLE PaymentType DROP CONSTRAINT [FK_Customer];
---ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_Employee];
---ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_TrainingProgram];
---ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_Employee_Computer];
---ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_Computer];
---ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Product];
---ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Orders];
---ALTER TABLE Orders DROP CONSTRAINT [FK_Customer_Order];
---ALTER TABLE Orders DROP CONSTRAINT [FK_PaymentType];
+ALTER TABLE Employee DROP CONSTRAINT [FK_Department];
+ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_Employee];
+ALTER TABLE EmployeeTraining DROP CONSTRAINT [FK_TrainingProgram];
+ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_EmployeeComputer_Employee];
+ALTER TABLE EmployeeComputer DROP CONSTRAINT [FK_EmployeeComputer_Computer];
+ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Product];
+ALTER TABLE ProductOrder DROP CONSTRAINT [FK_Orders];
+ALTER TABLE Orders DROP CONSTRAINT [FK_Customer_Order];
+ALTER TABLE Orders DROP CONSTRAINT [FK_PaymentType];
+ALTER TABLE Product DROP CONSTRAINT [FK_ProductType];
+ALTER TABLE Product DROP CONSTRAINT [FK_Seller];
+ALTER TABLE PaymentType DROP CONSTRAINT [FK_Customer];
 
---delete from ProductOrder;
---delete from Orders;
---delete from PaymentType;
---delete from Customer;
---delete from Product;
---delete from ProductType;
---delete from EmployeeComputer;
---delete from Computer;
---delete from EmployeeTraining;
---delete from TrainingProgram;
---delete from Employee;
---delete from Department;
+delete from ProductOrder;
+delete from Orders;
+delete from PaymentType;
+delete from Customer;
+delete from Product;
+delete from ProductType;
+delete from EmployeeComputer;
+delete from Computer;
+delete from EmployeeTraining;
+delete from TrainingProgram;
+delete from Employee;
+delete from Department;
 
---drop table if exists Department;
---drop table if exists Employee;
---drop table if exists TrainingProgram;
---drop table if exists EmployeeTraining;
---drop table if exists Computer;
---drop table if exists EmployeeComputer;
---drop table if exists ProductType;
---drop table if exists Product;
---drop table if exists Customer;
---drop table if exists PaymentType;
---drop table if exists Orders;
---drop table if exists ProductOrder;
+drop table if exists Department;
+drop table if exists TrainingProgram;
+drop table if exists EmployeeTraining;
+drop table if exists Computer;
+drop table if exists EmployeeComputer;
+drop table if exists ProductType;
+drop table if exists Product;
+drop table if exists Customer;
+drop table if exists PaymentType;
+drop table if exists Orders;
+drop table if exists ProductOrder;
+drop table if exists Employee;
 	
 CREATE TABLE Department (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
@@ -62,151 +62,267 @@ Insert into Department
 (DeptName, ExpenseBudget)
 select 'Accounting',
 619000;
+
+CREATE TABLE Computer (
+Id	integer NOT NULL PRIMARY KEY IDENTITY,
+PurchaseDate	DATE NOT NULL,
+Manufacturer	varchar(80) not null,
+Make varchar(80) not null,
+DecommissionDate	DATE,
+Condition	varchar(80)
+);
+					
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2018/07/01', 'Apple', 'MacBook Pro', null, 'new';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2018/08/02', 'Apple', 'MacBook Pro', null, 'new';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2018/09/03', 'Apple', 'MacBook Pro', null, 'new';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'Apple', 'MacBook Pro', null, 'good';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'Apple', 'MacBook Pro', null, 'good';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'Apple', 'MacBook Pro', null, 'good';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2016/11/23', 'HP', 'Spectre Laptop', null, 'good';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'HP', 'Spectre Laptop', null, 'good';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'HP', 'Spectre Laptop', null, 'good';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', null, 'fair';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', null, 'fair';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', null, 'fair';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'Dell', 'Inspiron', '2018/04/30', 'decommissioned';
+
+Insert into Computer
+(PurchaseDate, Manufacturer, Make, DecommissionDate, Condition)
+select '2017/04/15', 'HP', 'Spectre Laptop', '2018/04/23', 'decommissioned';
 	
 CREATE TABLE Employee (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
 FirstName	varchar(80) NOT NULL,
 LastName	varchar(80) NOT NULL,
-IsSupervisor	bit not null,
-DepartmentId integer not null,
-IsActive	bit not null
+StartDate DATE NOT NULL,
+EndDate DATE,
+IsSupervisor	bit,
+DepartmentId integer NOT NULL,
+IsActive	bit
 Constraint FK_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id)
 );
 					
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'John',
 'Doe',
+'2010/01/20',
+null,
 1,
 d.Id,
 1
-from Department d where d.DeptName = 'Marketing';
+from Department d
+where d.DeptName = 'Marketing'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Jane',
 'Smith',
+'2010/01/20',
+null,
 0,
 d.Id,
 1
-from Department d where d.DeptName = 'Human Resources';
+from Department d
+where d.DeptName = 'Human Resources'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select'Brittany',
 'Jefferson',
+'2010/01/20',
+null,
 0,
 d.Id,
 1
-from Department d where d.DeptName = 'Information Technology';
+from Department d
+where d.DeptName = 'Information Technology'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Frank',
 'Willson',
+'2010/01/20',
+null,
 1,
 d.Id,
 1
-from Department d where d.DeptName = 'Accounting';
+from Department d
+where d.DeptName = 'Accounting'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Jack',
 'Johnson',
+'2010/01/20',
+null,
 0,
 d.Id,
 0
-from Department d where d.DeptName = 'Marketing';
+from Department d
+where d.DeptName = 'Marketing'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'John',
 'Bob',
+'2010/01/20',
+null,
 0,
 d.Id,
 1
-from Department d where d.DeptName = 'Accounting';
+from Department d
+where d.DeptName = 'Accounting'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Iron',
 'Man',
+'2010/01/20',
+null,
 1,
 d.Id,
 1
-from Department d where d.DeptName = 'Human Resources';
+from Department d
+where d.DeptName = 'Human Resources'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Joe',
 'Black',
+'2010/01/20',
+null,
 0,
 d.Id,
 0
-from Department d where d.DeptName = 'Marketing';
+from Department d
+where d.DeptName = 'Marketing'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Ben',
 'Button',
+'2010/01/20',
+null,
 0,
 d.Id,
 1
-from Department d where d.DeptName = 'Accounting';
+from Department d
+where d.DeptName = 'Accounting'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Lady',
 'Gaga',
+'2010/01/20',
+null,
 1,
 d.Id,
 1
-from Department d where d.DeptName = 'Marketing';
+from Department d
+where d.DeptName = 'Marketing'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Mister',
 'Smith',
+'2010/01/20',
+null,
 0,
 d.Id,
 1
-from Department d where d.DeptName = 'Accounting';
+from Department d
+where d.DeptName = 'Accounting'
+;
 
 Insert into Employee
-(FirstName, LastName, IsSupervisor, DepartmentId, IsActive)
+(FirstName, LastName, StartDate, EndDate, IsSupervisor, DepartmentId, IsActive)
 select 'Ryan',
 'Reynolds',
+'2010/01/20',
+null,
 0,
 d.Id,
 1
-from Department d where d.DeptName = 'Marketing';
+from Department d
+where d.DeptName = 'Marketing'
+;
 					
 CREATE TABLE TrainingProgram (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
 ProgName	varchar(80) NOT NULL,
 StartDate	DATE NOT NULL,
 EndDate	DATE not null,
+ProgDesc varchar(80) NOT NULL,
 MaxAttendees integer not null
 );
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'New Hire', '2018/09/19', '2019/12/18', 20
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'New Hire', '2018/09/19', '2019/12/18', 'Onboarding', 20
 ;
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'Sales', '2018/10/11', '2019/01/18', 8
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'Sales', '2018/10/11', '2019/01/18', 'Learning how to sell', 8
 ;
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'Six Sigma', '2018/11/11', '2019/02/10', 15
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'Six Sigma', '2018/11/11', '2019/02/10', 'Learn what Six Sigma is', 15
 ;
 
 Insert into TrainingProgram
-(ProgName, StartDate, EndDate, MaxAttendees)
-select 'Diversity', '2018/12/11', '2019/04/12', 50
+(ProgName, StartDate, EndDate, ProgDesc, MaxAttendees)
+select 'Diversity', '2018/12/11', '2019/04/12', 'Learning to love everyone', 50
 ;
 					
 CREATE TABLE EmployeeTraining (
@@ -273,69 +389,7 @@ from Employee e, TrainingProgram tp
 where e.FirstName = 'Jack' and tp.ProgName = 'Six Sigma'
 ;
 					
-CREATE TABLE Computer (
-Id	integer NOT NULL PRIMARY KEY IDENTITY,
-PurchaseDate	DATE NOT NULL,
-Model	varchar(80) not null,
-DecommissionDate	DATE,
-Condition	varchar(80) not null
-);
-					
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2018/07/01', 'Apple', null, 'new';
 
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2018/08/02', 'Apple', null, 'new';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2018/09/03', 'Apple', null, 'new';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'Apple', null, 'good';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'Apple', null, 'good';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'Apple', null, 'good';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2016/11/23', 'HP', null, 'good';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'HP', null, 'good';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'HP', null, 'good';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', null, 'fair';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', null, 'fair';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', null, 'fair';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'Dell', '2018/04/30', 'decommissioned';
-
-Insert into Computer
-(PurchaseDate, Model, DecommissionDate, Condition)
-select '2017/04/15', 'HP', '2018/04/23', 'decommissioned';
 					
 CREATE TABLE EmployeeComputer (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
@@ -343,8 +397,8 @@ EmployeeId	integer NOT NULL,
 ComputerId	integer NOT NULL,
 DateAssigned		DATE not null,
 DateTurnedIn		DATE,
-Constraint FK_Employee_Computer FOREIGN KEY(EmployeeId) REFERENCES Employee(Id),
-Constraint FK_Computer FOREIGN KEY(ComputerId) REFERENCES Computer(Id)
+Constraint FK_EmployeeComputer_Employee FOREIGN KEY(EmployeeId) REFERENCES Employee(Id),
+Constraint FK_EmployeeComputer_Computer FOREIGN KEY(ComputerId) REFERENCES Computer(Id)
 );
 					
 Insert into EmployeeComputer
