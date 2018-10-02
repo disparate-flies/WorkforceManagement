@@ -83,7 +83,8 @@ namespace WorkforceManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Computer computer)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 string sql = $@"
                     INSERT INTO Computer
                         (PurchaseDate, Manufacturer, Make )
@@ -102,7 +103,11 @@ namespace WorkforceManagement.Controllers
                     }
                 }
             }
-                return View(computer);
+            else
+            {
+                return new StatusCodeResult(StatusCodes.Status406NotAcceptable);
+            }
+            return View(computer);
         }
 
         // GET: Computer/Edit/5
