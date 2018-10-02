@@ -38,15 +38,13 @@ namespace WorkforceManagement.Controllers
                 select
                 t.Id,
                 t.ProgName
-                from Training t";
+                from TrainingProgram t";
 
             using (IDbConnection conn = Connection)
             {
-                Dictionary<int, Training> trainingPrograms = new Dictionary<int, Training>();
-
-                var trainingQuerySet = await conn.QueryAsync<Training>(
+                IEnumerable<Training> trainingPrograms = await conn.QueryAsync<Training>(
                     sql);
-                return View(trainingQuerySet);
+                return View(trainingPrograms);
             }
         }
 
@@ -64,9 +62,9 @@ namespace WorkforceManagement.Controllers
                 t.ProgName,
                 t.StartDate,
                 t.EndDate,
-                t.Description,
+                t.ProgDesc,
                 t.MaxAttendees
-                from Training t
+                from TrainingProgram t
                 WHERE t.Id = {id}";
 
             using (IDbConnection conn = Connection)
@@ -96,14 +94,14 @@ namespace WorkforceManagement.Controllers
         if (ModelState.IsValid)
         {
             string sql = $@"
-                INSERT INTO Training
-                (ProgName, StartDate, EndDate, MaxAttendees, Description)
+                INSERT INTO TrainingProgram
+                (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
                 VALUES
                 ( '{trainingProgram.ProgName}'
-                    ,{trainingProgram.StartDate}
-                    ,{trainingProgram.EndDate}
-                    ,{trainingProgram.MaxAttendees}
-                    ,{trainingProgram.Description}
+                    ,'{trainingProgram.StartDate}'
+                    ,'{trainingProgram.EndDate}'
+                    ,'{trainingProgram.MaxAttendees}'
+                    ,'{trainingProgram.ProgDesc}'
                 )
                 ";
 
@@ -120,8 +118,8 @@ namespace WorkforceManagement.Controllers
         return View(trainingProgram);
     }
 }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, )
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Edit(int id, )
 
 }
