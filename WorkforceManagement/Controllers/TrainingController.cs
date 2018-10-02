@@ -120,8 +120,8 @@ namespace WorkforceManagement.Controllers
         return View(trainingProgram);
     }
 }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, )
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Edit(int id, )
 
 }
