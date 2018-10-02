@@ -38,34 +38,34 @@ namespace WorkforceManagement.Controllers
             string sql = @"
                select 
                     e.Id,
+                    e.DepartmentId,
                     e.FirstName,
                     e.LastName,
-                    d.DepartmentId
+                    d.Id,
+                    d.DeptName
                 from Employee e
-                join Department d on e.DepartmentId = d.Id
-                where e.Id = {id}";
+                join Department d on e.DepartmentId = d.Id";
 
             using (IDbConnection conn = Connection)
             {
-                Dictionary<int, Employees> Employee = new Dictionary<int, Employees>();
+                Dictionary<int, Employees> employee = new Dictionary<int, Employees>();
 
-                var employeeQuerySet = await conn.QueryAsync<Employees, Department, Computer, Employees>(
+                var employeeQuerySet = await conn.QueryAsync<Employees, Department, Employees>(
                     sql,
-                    (employees, department, computer) =>
+                    (employees, department) =>
                     {
-                        if (!Employee.ContainsKey(employees.Id))
+                        if (!employee.ContainsKey(employees.Id))
                         {
-                            Employee[employees.Id] = employees;
+                            employee[employees.Id] = employees;
                         }
-                        Employee[employees.Id].Department = department;
-                        Employee[employees.Id].Computer = computer;
+                        employee[employees.Id].Department = department;
                         return employees;
                     });
-                return View(Employee.Values);
+                return View(employee.Values);
             }
         }
 
-        public async Task<IActionResult> EmployeeDetails(int? id)
+        public async Task<IActionResult>Details(int? id)
         {
             if (id == null)
             {
@@ -73,16 +73,29 @@ namespace WorkforceManagement.Controllers
             }
 
             string sql = $@"
-            select
-               e.Id,
-               e.FirstName,
-               e.LastName,
-               c.ComputerId,
-               t.Training
-            from Employees e
-            join Computer c on e.ComputerId = c.Id
-            join Training t on e.Training = t.Id
-          ";
+             select
+                  e.Id,
+                   e.DepartmentId,
+                  e.FirstName,
+                  e.LastName,
+                  d.Id,
+                   d.DeptName,
+                   ec.EmployeeId,
+                   ec.ComputerId,
+                   c.Id,
+                   c.Make,
+                   c.Manufacturer,
+                   et.EmployeeId,
+                   et.TrainingProgramId,
+                   tp.Id,
+                   tp.ProgName
+              from Employee e
+              join Department d on e.DepartmentId = d.Id
+              join EmployeeComputer ec on e.Id = ec.EmployeeId
+              join Computer c on c.Id = ec.ComputerId
+              join EmployeeTraining et ON et.EmployeeId = e.Id
+              join TrainingProgram tp ON tp.ID = et.TrainingProgramId
+              where e.Id = {id}";
 
             using (IDbConnection conn = Connection)
             {
@@ -149,7 +162,7 @@ namespace WorkforceManagement.Controllers
             using (IDbConnection conn = Connection)
             {
                 IEnumerable<Employees> employee = (await conn.QueryAsync<Employees>("SELECT Id, FirstName FROM Employees")).ToList();
-                ViewData["EmployeeId"] = await EmployeeList(employee.Employees);
+                ViewData["EmployeeId"] = await EmployeeList(employees.Id);
                 return View(employee);
             }
         } 
