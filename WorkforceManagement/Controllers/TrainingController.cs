@@ -87,15 +87,15 @@ namespace WorkforceManagement.Controllers
         }
 
 
-    //POST Create Training Program
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+        //POST Create Training Program
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
-    public async Task<IActionResult> Create(Training trainingProgram)
-    {
-        if (ModelState.IsValid)
+        public async Task<IActionResult> Create(Training trainingProgram)
         {
-            string sql = $@"
+            if (ModelState.IsValid)
+            {
+                string sql = $@"
                 INSERT INTO Training
                 (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
                 VALUES
@@ -107,29 +107,29 @@ namespace WorkforceManagement.Controllers
                 )
                 ";
 
-            using (IDbConnection conn = Connection)
-            {
-                int rowsAffected = await conn.ExecuteAsync(sql);
-
-                if (rowsAffected > 0)
+                using (IDbConnection conn = Connection)
                 {
-                    return RedirectToAction(nameof(Index));
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
             }
-        }
-        return View(trainingProgram);
-    }
-}
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, )
-    {
-        if(id == null)
-        {
-            return NotFound();
+            return View(trainingProgram);
         }
 
-        string sql = $@"
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            string sql = $@"
                 SELECT 
                 t.Id,
                 t.ProgName,
@@ -140,18 +140,15 @@ namespace WorkforceManagement.Controllers
                 from TrainingProgram t
                 WHERE t.Id = {id}
 ";
-        using (IDbConnection conn = Connection)
-        {
-            Training trainingProgram = (await conn.QueryAsync<Training>(sql)).ToList().Single();
-
-            if (trainingProgram == null)
+            using (IDbConnection conn = Connection)
             {
-                return NotFound();
+                Training model = (await conn.QueryAsync<Training>(sql)).Single();
+
+                return View(model);
             }
-            return View(trainingProgram);
+
+
         }
 
-
     }
-
 }

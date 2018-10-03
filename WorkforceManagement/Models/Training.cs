@@ -30,7 +30,7 @@ namespace WorkforceManagement.Models
 
         [Required]
         [Display(Name = "Description")]
-        public string Description { get; set; }
+        public string ProgDesc { get; set; }
 
     }
 
