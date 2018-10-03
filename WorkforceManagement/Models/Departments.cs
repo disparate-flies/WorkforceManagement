@@ -18,6 +18,7 @@ namespace WorkforceManagement.Models
         [Display(Name = "Department Budget")]
         public double ExpenseBudget { get; set; }
 
+        [Display(Name = "Employees")]
         public List<Employees> EmployeeList { get; set; } = new List<Employees>();
     }
 }
