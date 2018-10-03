@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using WorkforceManagement.Models;
 using System.Data.SqlClient;
+<<<<<<< HEAD
 using Dapper;
+=======
+>>>>>>> master
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -146,7 +149,7 @@ namespace WorkforceManagement.Controllers
                         ('{employees.FirstName}',
                          '{employees.LastName}',
                          '{employees.StartDate}',   
-                         '{employees.Department}')";
+                         '{employees.Department.Id}')";
 
                 using (IDbConnection conn = Connection)
                 {
