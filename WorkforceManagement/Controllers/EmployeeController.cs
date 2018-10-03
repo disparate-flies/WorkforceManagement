@@ -140,7 +140,7 @@ namespace WorkforceManagement.Controllers
             if (ModelState.IsValid)
             {
                 string sql = $@"
-                    insert into Employees
+                    insert into Employee
                         (FirstName, LastName, StartDate, Department)
                     values
                         ('{employees.FirstName}',
