@@ -191,13 +191,19 @@ namespace WorkforceManagement.Controllers
         }
 
         // POST: Computer/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Delete([FromRoute]int? id)
-        //{
-            
-        //}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            string sql = $@"DELETE From Computer WHERE Id = {id}";
+
+            using (IDbConnection conn = Connection) {
+                int rowsAffected = await conn.ExecuteAsync(sql);
+                if (rowsAffected > 0) {
+                    return RedirectToAction(nameof(Index));
+                }
+                throw new Exception("No rows affected");
+            }
+        }
     }
 }
-
-//return RedirectToAction(nameof(Index));
