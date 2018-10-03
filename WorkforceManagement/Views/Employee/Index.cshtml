@@ -18,25 +18,30 @@
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department.DeptName)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var employees in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => employees.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => employees.LastName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@employees.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@employees.Id">Details</a> |
-                    <a asp-action="DeleteConfirm" asp-route-id="@employees.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => employees.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => employees.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => employees.Department.DeptName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@employees.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@employees.Id">Details</a> 
+            </td>
+        </tr>
         }
     </tbody>
 </table>
