@@ -40,7 +40,9 @@ namespace WorkforceManagement.Controllers
                 t.ProgName,
                 t.StartDate,
                 t.EndDate
-                from TrainingProgram t";
+                from TrainingProgram t
+				where StartDate > (select CAST(GETDATE() as DATE))
+                ";
 
             using (IDbConnection conn = Connection)
             {
