@@ -37,7 +37,9 @@ namespace WorkforceManagement.Controllers
             string sql = @"
                 select
                 t.Id,
-                t.ProgName
+                t.ProgName,
+                t.StartDate,
+                t.EndDate
                 from TrainingProgram t";
 
             using (IDbConnection conn = Connection)
