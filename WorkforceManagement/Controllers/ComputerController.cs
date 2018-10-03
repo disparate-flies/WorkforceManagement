@@ -83,9 +83,11 @@ namespace WorkforceManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Computer computer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                string sql = $@"
+                if (ModelState.IsValid)
+                {
+                    string sql = $@"
                     INSERT INTO Computer
                         (PurchaseDate, Manufacturer, Make )
                         VALUES
@@ -93,20 +95,29 @@ namespace WorkforceManagement.Controllers
                          '{computer.Manufacturer}', 
                          '{computer.Make}')";
 
-                using (IDbConnection conn = Connection)
-                {
-                    int rowsAffected = await conn.ExecuteAsync(sql);
-
-                    if (rowsAffected > 0)
+                    using (IDbConnection conn = Connection)
                     {
-                        return RedirectToAction(nameof(Index));
+                        int rowsAffected = await conn.ExecuteAsync(sql);
+
+                        if (rowsAffected > 0)
+                        {
+                            return RedirectToAction(nameof(Index));
+                        }
                     }
                 }
+                else
+                {
+                    return new StatusCodeResult(StatusCodes.Status406NotAcceptable);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return new StatusCodeResult(StatusCodes.Status406NotAcceptable);
+                //display error
+
+                throw new Exception(ex.ToString());
+
             }
+
             return View(computer);
         }
 
