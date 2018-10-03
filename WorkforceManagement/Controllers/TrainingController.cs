@@ -38,7 +38,7 @@ namespace WorkforceManagement.Controllers
                 select
                 t.Id,
                 t.ProgName
-                from Training t";
+                from TrainingProgram t";
 
             using (IDbConnection conn = Connection)
             {
@@ -64,9 +64,9 @@ namespace WorkforceManagement.Controllers
                 t.ProgName,
                 t.StartDate,
                 t.EndDate,
-                t.Description,
+                t.ProgDesc,
                 t.MaxAttendees
-                from Training t
+                from TrainingProgram t
                 WHERE t.Id = {id}";
 
             using (IDbConnection conn = Connection)
@@ -97,13 +97,13 @@ namespace WorkforceManagement.Controllers
         {
             string sql = $@"
                 INSERT INTO Training
-                (ProgName, StartDate, EndDate, MaxAttendees, Description)
+                (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
                 VALUES
                 ( '{trainingProgram.ProgName}'
                     ,{trainingProgram.StartDate}
                     ,{trainingProgram.EndDate}
                     ,{trainingProgram.MaxAttendees}
-                    ,{trainingProgram.Description}
+                    ,{trainingProgram.ProgDesc}
                 )
                 ";
 
@@ -120,8 +120,38 @@ namespace WorkforceManagement.Controllers
         return View(trainingProgram);
     }
 }
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, )
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, )
+    {
+        if(id == null)
+        {
+            return NotFound();
+        }
+
+        string sql = $@"
+                SELECT 
+                t.Id,
+                t.ProgName,
+                t.StartDate,
+                t.EndDate,
+                t.ProgDesc,
+                t.MaxAttendees
+                from TrainingProgram t
+                WHERE t.Id = {id}
+";
+        using (IDbConnection conn = Connection)
+        {
+            Training trainingProgram = (await conn.QueryAsync<Training>(sql)).ToList().Single();
+
+            if (trainingProgram == null)
+            {
+                return NotFound();
+            }
+            return View(trainingProgram);
+        }
+
+
+    }
 
 }

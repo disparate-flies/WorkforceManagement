@@ -40,7 +40,7 @@
 CREATE TABLE Department (
 Id	integer NOT NULL PRIMARY KEY IDENTITY,
 DeptName	varchar(80) NOT NULL,
-ExpenseBudget integer not null
+ExpenseBudget integer
 );
 					
 Insert into Department 
