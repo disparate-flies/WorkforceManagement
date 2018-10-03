@@ -145,72 +145,58 @@ namespace WorkforceManagement.Controllers
         }
 
         // GET: Computer/Delete/5
+        //[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirm([FromRoute]int? id)
         {
             if (id == null) {
                 return NotFound();
             }
 
-            string sql = $@"
-            SELECT
-                c.Id,
-                c.PurchaseDate,
-                c.Manufacturer,
-                c.Make,
-                c.DecommissionDate,
-                c.Condition
-            FROM Computer c
-            WHERE c.Id = {id}";
+            if (EmployeeExists(id))
+            {
+                return new StatusCodeResult(StatusCodes.Status405MethodNotAllowed);
+            }
+            else
+            {
+                string sql = $@"
+                    SELECT
+                      c.Id,
+                      c.PurchaseDate,
+                      c.Manufacturer,
+                      c.Make,
+                      c.DecommissionDate,
+                      c.Condition
+                    FROM Computer c
+                    WHERE c.Id = {id}";
 
-            using (IDbConnection conn = Connection) {
-                Computer computer = (await conn.QueryAsync<Computer>(sql)).ToList().Single();
+                using (IDbConnection conn = Connection)
+                {
+                    Computer computer = (await conn.QueryAsync<Computer>(sql)).ToList().Single();
 
-                if (computer == null) {
-                    return NotFound();
+                    return View(computer);
                 }
-                return View(computer);
+            } 
+        }
+
+        private bool EmployeeExists(int? id)
+        {
+            string sql = $@"SELECT *
+                FROM Employee e
+                JOIN EmployeeComputer ec ON ec.EmployeeId = e.Id
+                WHERE ec.ComputerId = {id}";
+            using (IDbConnection conn = Connection)
+            {
+                return conn.Query<Employees>(sql).Count() > 0;
             }
         }
 
         // POST: Computer/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([FromRoute]int? id)
-        {
-            string sql = $@"DELETE From Computer WHERE Id = {id}";
-
-            try
-            {
-                using (IDbConnection conn = Connection)
-                {
-                    int rowsAffected = await conn.ExecuteAsync(sql);
-                    if (rowsAffected > 0)
-                    {
-                        return new StatusCodeResult(StatusCodes.Status204NoContent);
-                    }
-                    throw new Exception("No rows affected");
-                }   
-            }
-            catch (Exception)
-            {
-                if (EmployeeExists(id))
-                {
-                    return new StatusCodeResult(StatusCodes.Status405MethodNotAllowed);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-        private bool EmployeeExists(int id)
-        {
-            string sql = $"SELECT * FROM Employee e WHERE e.ComputerId = {id}";
-            using (IDbConnection conn = Connection)
-            {
-                return conn.Query<Employee>(sql).Count() > 0;
-            }
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Delete([FromRoute]int? id)
+        //{
+            
+        //}
     }
 }
 
