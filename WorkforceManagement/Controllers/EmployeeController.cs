@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using WorkforceManagement.Models;
 using System.Data.SqlClient;
 
 namespace WorkforceManagement.Controllers
