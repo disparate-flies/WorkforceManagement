@@ -1,0 +1,32 @@
+﻿@model WorkforceManagement.Models.Department
+
+@{
+    ViewData["Title"] = @Html.DisplayFor(model => model.DeptName);
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeList)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var emp in Model.EmployeeList)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => emp.FirstName)
+                        @Html.DisplayFor(modelItem => emp.LastName)
+                    </li>
+                }
+            </ul>
+        </dd>
+        
+    </dl>
+    
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
