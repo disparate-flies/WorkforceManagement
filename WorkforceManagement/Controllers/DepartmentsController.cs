@@ -61,10 +61,9 @@ namespace WorkforceManagement.Controllers
             {
                 string sql = $@"
                     INSERT INTO Department
-                    (DeptName, ExpenseBudget)
+                    (DeptName)
                     VALUES
                     ( '{department.DeptName}'
-                    ,'{department.ExpenseBudget}'
                     )
                     ";
 
