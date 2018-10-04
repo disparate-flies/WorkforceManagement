@@ -37,7 +37,6 @@ namespace WorkforceManagement.Models
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
-
         [Required]
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
