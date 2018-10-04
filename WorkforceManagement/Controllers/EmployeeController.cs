@@ -11,6 +11,12 @@ using Microsoft.Extensions.Configuration;
 using WorkforceManagement.Models;
 using System.Data.SqlClient;
 
+<<<<<<< HEAD
+
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+=======
+>>>>>>> master
 namespace WorkforceManagement.Controllers
 {
     public class EmployeeController : Controller
