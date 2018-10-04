@@ -30,9 +30,12 @@ namespace WorkforceManagement.Models
 
         [Required]
         [Display(Name = "Description")]
-        public string Description { get; set; }
+        public string ProgDesc { get; set; }
 
-        public List<Employees> AttendingEmployees { get; set; } = new List<Employees>();
+<<<<<<< HEAD
+=======
+        //public List<Employees> AttendingEmployees { get; set; } = new List<Employees>();
+>>>>>>> master
     }
 
 }
