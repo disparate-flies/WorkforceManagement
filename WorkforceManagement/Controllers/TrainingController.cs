@@ -37,16 +37,19 @@ namespace WorkforceManagement.Controllers
             string sql = @"
                 select
                 t.Id,
-                t.ProgName
-                from TrainingProgram t";
+                t.ProgName,
+                t.StartDate,
+                t.EndDate
+                from TrainingProgram t
+				where StartDate > (select CAST(GETDATE() as DATE))
+                ";
+
 
             using (IDbConnection conn = Connection)
             {
-                Dictionary<int, Training> trainingPrograms = new Dictionary<int, Training>();
-
-                var trainingQuerySet = await conn.QueryAsync<Training>(
+                IEnumerable<Training> trainingPrograms = await conn.QueryAsync<Training>(
                     sql);
-                return View(trainingQuerySet);
+                return View(trainingPrograms);
             }
         }
 
@@ -93,6 +96,7 @@ namespace WorkforceManagement.Controllers
 
         public async Task<IActionResult> Create(Training trainingProgram)
         {
+<<<<<<< HEAD
             if (ModelState.IsValid)
             {
                 string sql = $@"
@@ -104,6 +108,17 @@ namespace WorkforceManagement.Controllers
                     ,{trainingProgram.EndDate}
                     ,{trainingProgram.MaxAttendees}
                     ,{trainingProgram.ProgDesc}
+=======
+            string sql = $@"
+                INSERT INTO TrainingProgram
+                (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
+                VALUES
+                ( '{trainingProgram.ProgName}'
+                    ,'{trainingProgram.StartDate}'
+                    ,'{trainingProgram.EndDate}'
+                    ,'{trainingProgram.MaxAttendees}'
+                    ,'{trainingProgram.ProgDesc}'
+>>>>>>> master
                 )
                 ";
 
@@ -149,6 +164,15 @@ namespace WorkforceManagement.Controllers
 
 
         }
+<<<<<<< HEAD
+=======
+        return View(trainingProgram);
+    }
+}
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Edit(int id, )
+>>>>>>> master
 
     }
 }

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using WorkforceManagement.Models;
 using System.Data.SqlClient;
 
-
 namespace WorkforceManagement.Controllers
 {
     public class EmployeeController : Controller

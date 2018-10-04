@@ -34,7 +34,7 @@ namespace WorkforceManagement.Models
 
 
         //public List<Employees> AttendingEmployees { get; set; } = new List<Employees>();
-
+               
     }
 
 }
