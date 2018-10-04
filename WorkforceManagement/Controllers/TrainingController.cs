@@ -96,20 +96,10 @@ namespace WorkforceManagement.Controllers
 
         public async Task<IActionResult> Create(Training trainingProgram)
         {
-<<<<<<< HEAD
+
             if (ModelState.IsValid)
             {
                 string sql = $@"
-                INSERT INTO Training
-                (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
-                VALUES
-                ( '{trainingProgram.ProgName}'
-                    ,{trainingProgram.StartDate}
-                    ,{trainingProgram.EndDate}
-                    ,{trainingProgram.MaxAttendees}
-                    ,{trainingProgram.ProgDesc}
-=======
-            string sql = $@"
                 INSERT INTO TrainingProgram
                 (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
                 VALUES
@@ -118,7 +108,6 @@ namespace WorkforceManagement.Controllers
                     ,'{trainingProgram.EndDate}'
                     ,'{trainingProgram.MaxAttendees}'
                     ,'{trainingProgram.ProgDesc}'
->>>>>>> master
                 )
                 ";
 
@@ -164,15 +153,8 @@ namespace WorkforceManagement.Controllers
 
 
         }
-<<<<<<< HEAD
-=======
-        return View(trainingProgram);
     }
 }
     //[HttpPost]
     //[ValidateAntiForgeryToken]
     //public async Task<IActionResult> Edit(int id, )
->>>>>>> master
-
-    }
-}
