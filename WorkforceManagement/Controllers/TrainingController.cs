@@ -153,8 +153,42 @@ namespace WorkforceManagement.Controllers
 
 
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Training model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                string sql = $@"
+                UPDATE TrainingProgram
+                SET             ProgName = '{model.ProgName}',
+                                StartDate = '{model.StartDate.Date}',
+                                EndDate = '{model.EndDate.Date}',
+                                ProgDesc = '{model.ProgDesc}',
+                                MaxAttendees = '{model.MaxAttendees}'
+                WHERE id = {id}";
+
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    throw new Exception("Training program not updated");
+                }
+            }
+            else
+            {
+                return new StatusCodeResult(StatusCodes.Status406NotAcceptable);
+            }
+            }
+        }
     }
-}
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, )
