@@ -142,8 +142,8 @@ namespace WorkforceManagement.Controllers
             return View(trainingProgram);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       
+ //GET Data to Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
