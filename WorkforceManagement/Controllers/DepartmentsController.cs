@@ -92,18 +92,29 @@ public async Task<IActionResult> Details(int? id)
         // POST: Departments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create (Department department)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                string sql = $@"
+                    INSERT INTO Department
+                    (DeptName)
+                    VALUES
+                    ( '{department.DeptName}'
+                    )
+                    ";
 
-                return RedirectToAction(nameof(Index));
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(department);
         }
 
         // GET: Departments/Edit/5
