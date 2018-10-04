@@ -1,0 +1,63 @@
+﻿@model WorkforceManagement.Models.Training
+
+@{
+    ViewData["Title"] = "Training Program Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.ProgName)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxAttendees)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxAttendees)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgDesc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgDesc)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeList)
+        </dt>
+        <dd>
+            
+            <ul>
+                @foreach (var emp in Model.EmployeeList)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => emp.FirstName)
+                        @Html.DisplayFor(modelItem => emp.LastName)
+                    </li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<div>
+
+    <a asp-action="Index">Back to List</a>
+</div>
