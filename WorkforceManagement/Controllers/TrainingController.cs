@@ -44,6 +44,7 @@ namespace WorkforceManagement.Controllers
 				where StartDate > (select CAST(GETDATE() as DATE))
                 ";
 
+
             using (IDbConnection conn = Connection)
             {
                 IEnumerable<Training> trainingPrograms = await conn.QueryAsync<Training>(
@@ -107,15 +108,16 @@ namespace WorkforceManagement.Controllers
         }
 
 
-    //POST Create Training Program
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+        //POST Create Training Program
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
-    public async Task<IActionResult> Create(Training trainingProgram)
-    {
-        if (ModelState.IsValid)
+        public async Task<IActionResult> Create(Training trainingProgram)
         {
-            string sql = $@"
+
+            if (ModelState.IsValid)
+            {
+                string sql = $@"
                 INSERT INTO TrainingProgram
                 (ProgName, StartDate, EndDate, MaxAttendees, ProgDesc)
                 VALUES
@@ -127,21 +129,84 @@ namespace WorkforceManagement.Controllers
                 )
                 ";
 
-            using (IDbConnection conn = Connection)
-            {
-                int rowsAffected = await conn.ExecuteAsync(sql);
-
-                if (rowsAffected > 0)
+                using (IDbConnection conn = Connection)
                 {
-                    return RedirectToAction(nameof(Index));
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
             }
+            return View(trainingProgram);
         }
-        return View(trainingProgram);
-    }
-}
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, )
 
-}
+       
+ //GET Data to Edit
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            string sql = $@"
+                SELECT 
+                t.Id,
+                t.ProgName,
+                t.StartDate,
+                t.EndDate,
+                t.ProgDesc,
+                t.MaxAttendees
+                from TrainingProgram t
+                WHERE t.Id = {id}
+";
+            using (IDbConnection conn = Connection)
+            {
+                Training model = (await conn.QueryAsync<Training>(sql)).Single();
+
+                return View(model);
+            }
+
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Training model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                string sql = $@"
+                UPDATE TrainingProgram
+                SET             ProgName = '{model.ProgName}',
+                                StartDate = '{model.StartDate.Date}',
+                                EndDate = '{model.EndDate.Date}',
+                                ProgDesc = '{model.ProgDesc}',
+                                MaxAttendees = '{model.MaxAttendees}'
+                WHERE id = {id}";
+
+                using (IDbConnection conn = Connection)
+                {
+                    int rowsAffected = await conn.ExecuteAsync(sql);
+                    if (rowsAffected > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    throw new Exception("Training program not updated");
+                }
+            }
+            else
+            {
+                return new StatusCodeResult(StatusCodes.Status406NotAcceptable);
+            }
+            }
+        }
+    }
