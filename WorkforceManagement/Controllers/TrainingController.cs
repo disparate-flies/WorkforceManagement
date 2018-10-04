@@ -68,19 +68,37 @@ namespace WorkforceManagement.Controllers
                 t.StartDate,
                 t.EndDate,
                 t.ProgDesc,
-                t.MaxAttendees
+                t.MaxAttendees,
+                et.Id,
+                et.EmployeeId,
+                et.TrainingProgramId,
+                e.Id,
+                e.FirstName,
+                e.LastName
                 from TrainingProgram t
+                LEFT JOIN EmployeeTraining et ON t.Id = et.TrainingProgramId
+				LEFT JOIN Employee e ON  e.Id = et.EmployeeId
                 WHERE t.Id = {id}";
 
             using (IDbConnection conn = Connection)
             {
-                Training trainingProgram = (await conn.QueryAsync<Training>(sql)).ToList().Single();
+                Training program = new Training();
+                var deptQuery = await conn.QueryAsync<Training, Employees, Training>(sql,
+                    (training, employee) =>
+                    {
 
-                if (trainingProgram == null)
-                {
-                    return NotFound();
-                }
-                return View(trainingProgram);
+                        program.Id = training.Id;
+                        program.ProgName = training.ProgName;
+                        program.StartDate = training.StartDate;
+                        program.EndDate = training.EndDate;
+                        program.MaxAttendees = training.MaxAttendees;
+                        program.ProgDesc = training.ProgDesc;
+
+
+                        program.EmployeeList.Add(employee);
+                        return training;
+                    });
+                return View(program);
             }
         }
 
