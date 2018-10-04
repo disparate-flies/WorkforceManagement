@@ -21,12 +21,12 @@ namespace WorkforceManagement.Models
         [Required]
         public string Make { get; set; }
 
-        [Required]
+        //[Required]
         [DataType(DataType.Date)]
         [Display(Name = "Decommission Date")]
         public DateTime DecommissionDate { get; set; }
 
-        [Required]
+        //[Required]
         public string Condition { get; set; }
     }
 }
