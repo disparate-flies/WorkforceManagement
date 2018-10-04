@@ -43,7 +43,23 @@
             @Html.DisplayFor(model => model.Computer.Manufacturer)
         </dd>
     </dl>
-</div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TrainingPrograms)
+    </dt>
+
+<dd>
+    <p>
+        @foreach (var train in Model.TrainingPrograms) 
+        {
+            <p>
+                @Html.DisplayFor(modelItem => train.ProgName)
+            </p>
+        }
+    </p>
+</dd>
+        </dl>
+    </div>
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

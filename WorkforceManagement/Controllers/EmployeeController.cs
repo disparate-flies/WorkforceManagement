@@ -80,15 +80,17 @@ namespace WorkforceManagement.Controllers
                   e.LastName,
                   d.Id,
                    d.DeptName,
-                   ec.EmployeeId,
-                   ec.ComputerId,
                    c.Id,
                    c.Make,
-                   c.Manufacturer
+                   c.Manufacturer,
+                   tp.Id,
+                   tp.ProgName
               from Employee e
               join Department d on e.DepartmentId = d.Id
               left join EmployeeComputer ec on e.Id = ec.EmployeeId
               left join Computer c on c.Id = ec.ComputerId
+              left join EmployeeTraining et on et.EmployeeId = e.Id
+              left join TrainingProgram tp on tp.Id = et.TrainingProgramId
               where e.Id = {id}";
 
             using (IDbConnection conn = Connection)
@@ -96,9 +98,10 @@ namespace WorkforceManagement.Controllers
                 Employees emp = new Employees();
                 Department dept = new Department();
                 Computer comp = new Computer();
-                var employeeQuerySet = await conn.QueryAsync<Employees, Department, Computer, Employees>(
+                Training train = new Training();
+                var employeeQuerySet = await conn.QueryAsync<Employees, Department, Computer, Training, Employees>(
     sql,
-             (employee, department, computer) =>
+             (employee, department, computer, training) =>
              {
 
                  emp.Id = employee.Id;
@@ -114,11 +117,17 @@ namespace WorkforceManagement.Controllers
                      comp.Manufacturer = computer.Manufacturer;
                  }
 
+                 if (training != null)
+                 {
+                     train.Id = training.Id;
+                     train.ProgName = training.ProgName;
+                 }
 
                  return employee;
-           });
+           }); 
                 emp.Department = dept;
                 emp.Computer = comp;
+                emp.TrainingPrograms.Add(train);
                 return View(emp);
              }
         }
