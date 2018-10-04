@@ -32,6 +32,10 @@ namespace WorkforceManagement.Models
         [Display(Name = "Description")]
         public string ProgDesc { get; set; }
 
+<<<<<<< HEAD
+=======
+        //public List<Employees> AttendingEmployees { get; set; } = new List<Employees>();
+>>>>>>> master
     }
 
 }
