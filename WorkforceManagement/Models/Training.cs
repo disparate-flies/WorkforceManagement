@@ -34,6 +34,7 @@ namespace WorkforceManagement.Models
 
         [Display(Name = "Attending Employees")]
         public List<Employees> EmployeeList { get; set; } = new List<Employees>();
+
     }
 
 }
