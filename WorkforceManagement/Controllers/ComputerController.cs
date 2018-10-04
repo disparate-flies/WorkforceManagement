@@ -148,17 +148,19 @@ namespace WorkforceManagement.Controllers
         //[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirm([FromRoute]int? id)
         {
-            if (id == null) {
-                return NotFound();
-            }
 
-            if (EmployeeExists(id))
-            {
-                return new StatusCodeResult(StatusCodes.Status405MethodNotAllowed);
-            }
-            else
-            {
-                string sql = $@"
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                if (EmployeeExists(id))
+                {
+                    throw new Exception(string.Format("You can not delete a computer that belongs to an employee."));
+                }
+                else
+                {
+                    string sql = $@"
                     SELECT
                       c.Id,
                       c.PurchaseDate,
@@ -169,13 +171,13 @@ namespace WorkforceManagement.Controllers
                     FROM Computer c
                     WHERE c.Id = {id}";
 
-                using (IDbConnection conn = Connection)
-                {
-                    Computer computer = (await conn.QueryAsync<Computer>(sql)).ToList().Single();
+                    using (IDbConnection conn = Connection)
+                    {
+                        Computer computer = (await conn.QueryAsync<Computer>(sql)).ToList().Single();
 
-                    return View(computer);
+                        return View(computer);
+                    }
                 }
-            } 
         }
 
         private bool EmployeeExists(int? id)
