@@ -145,25 +145,66 @@ namespace WorkforceManagement.Controllers
         }
 
         // GET: Computer/Delete/5
-        public ActionResult Delete(int id)
+        //[HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteConfirm([FromRoute]int? id)
         {
-            return View();
+
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                if (EmployeeExists(id))
+                {
+                    throw new Exception(string.Format("You can not delete a computer that belongs to an employee."));
+                }
+                else
+                {
+                    string sql = $@"
+                    SELECT
+                      c.Id,
+                      c.PurchaseDate,
+                      c.Manufacturer,
+                      c.Make,
+                      c.DecommissionDate,
+                      c.Condition
+                    FROM Computer c
+                    WHERE c.Id = {id}";
+
+                    using (IDbConnection conn = Connection)
+                    {
+                        Computer computer = (await conn.QueryAsync<Computer>(sql)).ToList().Single();
+
+                        return View(computer);
+                    }
+                }
+        }
+
+        private bool EmployeeExists(int? id)
+        {
+            string sql = $@"SELECT *
+                FROM Employee e
+                JOIN EmployeeComputer ec ON ec.EmployeeId = e.Id
+                WHERE ec.ComputerId = {id}";
+            using (IDbConnection conn = Connection)
+            {
+                return conn.Query<Employees>(sql).Count() > 0;
+            }
         }
 
         // POST: Computer/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            string sql = $@"DELETE From Computer WHERE Id = {id}";
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+            using (IDbConnection conn = Connection) {
+                int rowsAffected = await conn.ExecuteAsync(sql);
+                if (rowsAffected > 0) {
+                    return RedirectToAction(nameof(Index));
+                }
+                throw new Exception("No rows affected");
             }
         }
     }
